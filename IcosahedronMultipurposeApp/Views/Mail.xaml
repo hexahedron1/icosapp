@@ -1,0 +1,97 @@
+<Page
+	x:Class="IcosahedronMultipurposeApp.Views.MailPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:IcosahedronMultipurposeApp.Views"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	Loaded="Page_Loaded">
+	<Grid>
+		<SplitView PaneBackground="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" IsPaneOpen="True" DisplayMode="Inline" HorizontalAlignment="Stretch">
+			<SplitView.Pane>
+
+				<Pivot Title="Icosahedron Messaging System™">
+					<PivotItem Header="Contacts">
+						<Grid>
+							<CommandBar HorizontalAlignment="Left" DefaultLabelPosition="Right">
+								<AppBarButton Label="Add contact" Icon="AddFriend"></AppBarButton>
+							</CommandBar>
+							<ListView x:Name="ContactList" SelectionMode="Single" Margin="0, 50, 0, 0" SelectionChanged="ContactList_SelectionChanged">
+								<ListView.ItemTemplate>
+									<DataTemplate x:DataType="local:User">
+										<StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
+                                            <PersonPicture Margin="0, 0, 10, 0" MaxWidth="40" DisplayName="{Binding Username}" ProfilePicture="{Binding ProfilePicture}"></PersonPicture>
+                                            <Grid x:Name="MessageGrid">
+												<Grid.RowDefinitions>
+													<RowDefinition Height="*"/>
+													<RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="{Binding Username}" Grid.Row="0"></TextBlock>
+                                                <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                                    <TextBlock Text="@"></TextBlock>
+                                                    <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Name}"></TextBlock>
+                                                </StackPanel>
+                                            </Grid>
+										</StackPanel>
+									</DataTemplate>
+								</ListView.ItemTemplate>
+							</ListView>
+						</Grid>
+					</PivotItem>
+					<PivotItem Header="Groups" IsEnabled="False">
+						<Grid>
+							<CommandBar HorizontalAlignment="Left" DefaultLabelPosition="Right">
+								<AppBarButton Label="Create group" Icon="Add"></AppBarButton>
+								<AppBarButton Label="Find public group" Icon="Find"></AppBarButton>
+							</CommandBar>
+						</Grid>
+					</PivotItem>
+				</Pivot>
+			</SplitView.Pane>
+			<StackPanel Margin="15, 0, 0, 0" Orientation="Vertical" VerticalAlignment="Stretch">
+				<BreadcrumbBar x:Name="BreadcrumbBar1" IsEnabled="False"></BreadcrumbBar>
+				<StackPanel Orientation="Horizontal">
+					<PersonPicture MaxWidth="50" x:Name="ContactPicture" Margin="0, 0, 15, 0" DisplayName=""></PersonPicture>
+					<StackPanel Orientation="Vertical">
+                        <TextBlock x:Name="UsernameBlock" Style="{StaticResource BaseTextBlockStyle}"></TextBlock>
+                        <TextBlock x:Name="NameBlock" Style="{StaticResource BodyTextBlockStyle}"></TextBlock>
+                        <TextBlock x:Name="StatusBlock" Style="{StaticResource BodyStrongTextBlockStyle}"></TextBlock>
+					</StackPanel>
+				</StackPanel>
+				<ListView SelectionMode="None" x:Name="MessageListView">
+					<ListView.ItemsPanel>
+						<ItemsPanelTemplate>
+							<ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView"
+							  VerticalAlignment="Bottom"/>
+						</ItemsPanelTemplate>
+					</ListView.ItemsPanel>
+					<ListView.ItemTemplate>
+						<DataTemplate x:DataType="local:Message">
+							<StackPanel Orientation="Vertical">
+								<TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="{Binding Author.Username}"></TextBlock>
+								<TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Content}"></TextBlock>
+							</StackPanel>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+				<StackPanel Margin="0, 15, 0, 0" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+					<TextBox IsEnabled="False" x:Name="MessageTextBox" PlaceholderText="Message @" HorizontalAlignment="Stretch" MaxWidth="1000" KeyDown="MessageTextBox_KeyDown"></TextBox>
+                    <Button IsEnabled="False" Margin="5, 0, 5, 0" x:Name="SendMessageButton" Click="SendMessageButton_Click">
+                        <SymbolIcon Symbol="Send"></SymbolIcon>
+                    </Button>
+                    <TeachingTip
+                        x:Name="NoticeTip"
+                        Target="{x:Bind MessageTextBox}"
+                        Title="🚛🚛🚛🚛🚛🚛"
+                        Subtitle="This maffaka does not want to work!!!!!!"
+						>
+                        <TeachingTip.IconSource>
+                            <SymbolIconSource Symbol="Delete"></SymbolIconSource>
+                        </TeachingTip.IconSource>
+                    </TeachingTip>
+                </StackPanel>
+			</StackPanel>
+		</SplitView>
+	</Grid>
+</Page>

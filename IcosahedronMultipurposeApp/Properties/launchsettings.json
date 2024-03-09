@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "IcosahedronMultipurposeApp (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "IcosahedronMultipurposeApp (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
